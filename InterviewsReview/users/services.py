@@ -1,5 +1,6 @@
 from . import models
-from reviews_app.models import User, UserAuth, AdminUser
+from reviews_app.models import User, AdminUser
+from .models import UserAuth
 from .schemas import Role
 from typing import List
 from core.utils import add_entity

@@ -4,11 +4,11 @@ from fastapi import APIRouter, Depends, status, Response, HTTPException
 from sqlalchemy.orm import Session
 
 from core.utils import get_db
-from auth.jwt import get_current_user
 from record.record_router import record_router
 from . import schemas
 from . import services
 from . import validator
+from ..auth.jwt import get_current_user
 
 router = APIRouter(
     tags=['Users']
@@ -43,7 +43,11 @@ async def create_superuser(request: schemas.SuperUser, database: Session = Depen
     return new_user
 
 
-@router.get('/', response_model=List[schemas.DisplayUser])
+@router.get(
+    '/',
+    response_model=List[schemas.DisplayUser],
+    dependencies=[Depends(get_current_user)]
+)
 async def get_all_users(database: Session = Depends(get_db)):
     return await services.get_users(database)
 

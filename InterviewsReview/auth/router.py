@@ -1,11 +1,8 @@
-from datetime import timedelta
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from core.utils import get_db
-from core import database
 from core import security
 from users.models import UserAuth
 
@@ -25,7 +22,6 @@ def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(
     if not security.verify_password(request.password, user.password):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invalid Password')
 
-    # Generate a JWT Token
     access_token = create_access_token(data={"sub": user.email})
 
     return {"access_token": access_token, "token_type": "bearer"}

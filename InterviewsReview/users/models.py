@@ -1,5 +1,4 @@
-from sqlalchemy import Column, String, Integer, Text, Boolean, ForeignKey, Enum
-# from sqlalchemy.dialects.postgresql import ENUM
+from sqlalchemy import Column, String, Integer, Enum
 from sqlalchemy.orm import relationship
 from core.database import Base
 from core.security import verify_password, get_password_hash
@@ -7,7 +6,7 @@ from .schemas import Role
 
 
 class UserAuth(Base):
-    __tablename__ = "users_auth"
+    __tablename__ = "user_auth"
 
     id = Column(Integer, primary_key=True, index=True, unique=True)
     username = Column(String, unique=True)

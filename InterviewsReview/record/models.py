@@ -1,11 +1,10 @@
+from core.database import Base
 from sqlalchemy import Column, String, Integer, Text, Boolean, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from core.database import Base
-from reviews_app.models import *
 
 
 class Record(Base):
-    __tablename__ = "records"
+    __tablename__ = "record"
 
     record_id = Column(Integer, primary_key=True, index=True, unique=True)
     rating = Column(Float())  # points(рейтинг)
@@ -22,11 +21,11 @@ class Record(Base):
 
 
 class UserRecord(Base):
-    __tablename__ = "user_records"
+    __tablename__ = "user_record"
 
-    user_id = Column(Integer, ForeignKey('users.user_id'), primary_key=True)
-    company_name = Column(String(200), ForeignKey('companies.company_name'))
-    record_id = Column(Integer, ForeignKey('records.record_id'))
+    user_id = Column(Integer, ForeignKey('user.user_id'), primary_key=True)
+    company_name = Column(String(200), ForeignKey('company.company_name'))
+    record_id = Column(Integer, ForeignKey('record.record_id'))
     record_title = Column(String(200))
 
     record = relationship("Record", back_populates="user_record")
@@ -35,10 +34,10 @@ class UserRecord(Base):
 
 
 class HRRecord(Base):
-    __tablename__ = "hr_records"
+    __tablename__ = "hr_record"
 
-    hr_id = Column(Integer, ForeignKey('hr_users.hr_user_id'), primary_key=True)
-    record_id = Column(Integer, ForeignKey('records.record_id'))
+    hr_id = Column(Integer, ForeignKey('hr_user.hr_user_id'), primary_key=True)
+    record_id = Column(Integer, ForeignKey('record.record_id'))
     record_title = Column(String(200))
 
     hr_user = relationship("HRUser")

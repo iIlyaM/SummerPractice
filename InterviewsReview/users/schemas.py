@@ -1,5 +1,4 @@
-from pydantic import BaseModel, constr, validator, EmailStr
-from core import database
+from pydantic import BaseModel, constr, EmailStr
 from enum import Enum
 
 
